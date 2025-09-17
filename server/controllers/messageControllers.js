@@ -1,4 +1,3 @@
-import { startSucceeded } from "init";
 import Chat from "../models/Chat.js";
 import User from "../models/User.js";
 import axios from "axios";
