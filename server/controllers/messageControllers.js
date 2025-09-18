@@ -4,7 +4,7 @@ import axios from "axios";
 import imagekit from "../config/imagekit.js";
 import openai from "../config/openai.js";
 
-
+ 
 // Text-based AI Chat Message Controller
 export const textMessageController = async (req, res) => {
     try {
@@ -21,7 +21,7 @@ export const textMessageController = async (req, res) => {
 
         const { choices } = await openai.chat.completions.create({
             model: "gemini-2.0-flash",
-            messages: [
+            messages: [ 
                 {
                     role: "user",
                     content: prompt,
@@ -67,21 +67,20 @@ export const imageMessageController = async (req, res) => {
             isImage: false
         });
 
-
         // Encode the prompt
         const encodedPrompt = encodeURIComponent(prompt);
 
         // Construct ImageKit AI generation URL
-        const generateImageUrl = `${process.env.IMAGEKIT_URL_ENDPOINT}/ik-genimg-prompt-${encodedPrompt}/quickgpt/${Date.now()}.jpg?te=w-800,h-800`;
+        const generateImageUrl = `${process.env.IMAGEKIT_URL_ENDPOINT}/ik-genimg-prompt-${encodedPrompt}/quickgpt/${Date.now()}.png?tr=w-800,h-800`;
 
         //Trigger generation by fetching from imagekit
-        const aiImageResponce = await axios.get(generateImageUrl, { responceType: "arraybuffer" });
+        const aiImageResponce = await axios.get(generateImageUrl, { responseType: "arraybuffer" });
 
         // Convert to Base64 
         const base64Image = `data:image/png;base64${Buffer.from(aiImageResponce.data, "binary").toString("base64")}`;
 
         // Upload to ImageKit Media Library
-        const uploadResponce = await imagekit.upload({
+        const uploadResponse = await imagekit.upload({
             file: base64Image,
             fileName: `${Date.now()}.png`,
             folder: 'quickgpt'
@@ -89,9 +88,9 @@ export const imageMessageController = async (req, res) => {
 
         const reply = {
             role: 'assistant',
-            content: uploadResponce.url,
+            content: uploadResponse.url,
             timestamp: Date.now(),
-            isImage: false,
+            isImage: true,
             isPublished
         }
         res.json({ success: true, reply });

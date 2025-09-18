@@ -76,11 +76,13 @@ export const purchasePlan = async (req, res) => {
                     quantity: 1,
                 },
             ],
+            // payment_method_types: ['card'],
             mode: 'payment',
             success_url: `${origin}/loading`,
             cancel_url: `${origin}`,
             metadata: { transactionId: transaction._id.toString(), appId: 'quickgpt' },
             expires_at: Math.floor(Date.now() / 1000) + 30 * 60,
+            locale: "en",
         });
 
         res.json({ success: true, url: session.url })
