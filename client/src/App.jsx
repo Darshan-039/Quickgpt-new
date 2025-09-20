@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import Sidebar from './components/Sidebar'
-import Chatbox from './components/Chatbox'
+import ChatBox from './components/ChatBox'
 import Credits from './pages/Credits'
 import Community from './pages/Community'
 import { assets } from './assets/assets'
@@ -31,7 +31,7 @@ const App = () => {
           <div className='flex h-screen w-screen'>
             <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
             <Routes>
-              <Route path='/' element={<Chatbox />} />
+              <Route path='/' element={<ChatBox />} />
               <Route path='/credits' element={<Credits />} />
               <Route path='/community' element={<Community />} />
             </Routes>
